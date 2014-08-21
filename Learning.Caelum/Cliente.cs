@@ -2,15 +2,17 @@
 {
 	public sealed class Cliente
 	{
-		public string Nome { get; set; }
+		public string Nome { get; private set; }
 
-		public string RG { get; set; }
+		public string RG { get; private set; }
 
-		public string CPF { get; set; }
+		public string CPF { get; private set; }
 
-		public string Endereco { get; set; }
+		public string Endereco { get; private set; }
 
-		public int Idade { get; set; }
+		public int Idade { get; private set; }
+
+		public bool EEmancipado { get; private set; }
 
 		public bool EhMaiorDeIdade
 		{
@@ -27,6 +29,11 @@
 
 		public Cliente()
 		{
+		}
+
+		public bool PodeAbrirConta()
+		{
+			return (EhMaiorDeIdade || EEmancipado) && !string.IsNullOrEmpty(CPF);
 		}
 	}
 }

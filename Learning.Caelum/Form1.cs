@@ -9,13 +9,20 @@ namespace Learning.Caelum
 	{
 		private IContainer components = (IContainer)null;
 		private Conta conta;
-		private Button button1;
+		private Button DepositoBtn;
 		private TextBox textoTitular;
 		private TextBox textoSaldo;
 		private TextBox textoNumero;
 		private TextBox textoValor;
-		private Button button2;
+		private Button SaqueBtn;
+		private ComboBox comboContas;
 		private Label label1;
+
+		private Conta[] contas = new Conta[10];
+		private ComboBox destinoDaTrans;
+		private Label label2;
+		private Button TransferenciaBtn;
+		private int quantidade = 0;
 
 		public Form1()
 		{
@@ -24,25 +31,58 @@ namespace Learning.Caelum
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			this.conta = new Conta();
-			this.conta.Deposita(100.0);
-			this.conta.Numero = 1;
-			this.conta.Titular = new Cliente("João");
-			this.textoSaldo.Text = Convert.ToString(this.conta.Saldo);
-			this.textoNumero.Text = Convert.ToString(this.conta.Numero);
-			this.textoTitular.Text = this.conta.Titular.Nome;
+			contas = AdicionarConta(contas, 100, 1, "João");
+			contas = AdicionarConta(contas, 200, 1, "Mário");
+
+			for (int i = 0; i < 2; i++)
+			{
+				comboContas.Items.Add(contas[i].Titular.Nome);
+				destinoDaTrans.Items.Add(contas[i].Titular.Nome);
+			}
+
+			comboContas.SelectedIndex = 0;
+			destinoDaTrans.SelectedIndex = 1;
+			textoValor.Text = "1";
+			AtualizarValoresExibidos(contas[0]);
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void AtualizarValoresExibidos(Conta conta)
 		{
-			this.conta.Deposita(Convert.ToDouble(this.textoValor.Text));
-			this.textoSaldo.Text = this.conta.Saldo.ToString();
+			this.textoSaldo.Text = Convert.ToString(conta.Saldo);
+			this.textoNumero.Text = Convert.ToString(conta.Numero);
+			this.textoTitular.Text = conta.Titular.Nome;
 		}
 
-		private void button2_Click(object sender, EventArgs e)
+		private Conta[] AdicionarConta(Conta[] contas, double valorDepositar, int numero, string nomeTitular)
 		{
-			this.conta.Saca(Convert.ToDouble(this.textoValor.Text));
-			this.textoSaldo.Text = this.conta.Saldo.ToString();
+			Conta conta = new ContaCorrente();
+			conta.Deposita(valorDepositar);
+			conta.Numero = numero;
+			conta.Titular = new Cliente(nomeTitular);
+			contas[quantidade++] = conta;
+
+			return contas;
+		}
+
+		private void DepositoBtn_Click(object sender, EventArgs e)
+		{
+			double valorDeposito = Convert.ToDouble(textoValor.Text);
+			Conta contaSelecionada = this.BuscaContaSelecionada();
+			contaSelecionada.Deposita(valorDeposito);
+			AtualizarValoresExibidos(contaSelecionada);
+		}
+
+		private Conta BuscaContaSelecionada()
+		{
+			return contas[comboContas.SelectedIndex];
+		}
+
+		private void SaqueBtn_Click(object sender, EventArgs e)
+		{
+			double valorSaque = Convert.ToDouble(textoValor.Text);
+			Conta contaSelecionada = this.BuscaContaSelecionada();
+			contaSelecionada.Saca(valorSaque);
+			AtualizarValoresExibidos(contaSelecionada);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -54,24 +94,28 @@ namespace Learning.Caelum
 
 		private void InitializeComponent()
 		{
-			this.button1 = new System.Windows.Forms.Button();
+			this.DepositoBtn = new System.Windows.Forms.Button();
 			this.textoTitular = new System.Windows.Forms.TextBox();
 			this.textoSaldo = new System.Windows.Forms.TextBox();
 			this.textoNumero = new System.Windows.Forms.TextBox();
 			this.textoValor = new System.Windows.Forms.TextBox();
-			this.button2 = new System.Windows.Forms.Button();
+			this.SaqueBtn = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
+			this.comboContas = new System.Windows.Forms.ComboBox();
+			this.destinoDaTrans = new System.Windows.Forms.ComboBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.TransferenciaBtn = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// button1
+			// DepositoBtn
 			// 
-			this.button1.Location = new System.Drawing.Point(171, 211);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "Deposito";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.DepositoBtn.Location = new System.Drawing.Point(197, 211);
+			this.DepositoBtn.Name = "DepositoBtn";
+			this.DepositoBtn.Size = new System.Drawing.Size(75, 23);
+			this.DepositoBtn.TabIndex = 0;
+			this.DepositoBtn.Text = "Deposito";
+			this.DepositoBtn.UseVisualStyleBackColor = true;
+			this.DepositoBtn.Click += new System.EventHandler(this.DepositoBtn_Click);
 			// 
 			// textoTitular
 			// 
@@ -101,15 +145,15 @@ namespace Learning.Caelum
 			this.textoValor.Size = new System.Drawing.Size(100, 20);
 			this.textoValor.TabIndex = 4;
 			// 
-			// button2
+			// SaqueBtn
 			// 
-			this.button2.Location = new System.Drawing.Point(79, 211);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 5;
-			this.button2.Text = "Saque";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.SaqueBtn.Location = new System.Drawing.Point(108, 211);
+			this.SaqueBtn.Name = "SaqueBtn";
+			this.SaqueBtn.Size = new System.Drawing.Size(75, 23);
+			this.SaqueBtn.TabIndex = 5;
+			this.SaqueBtn.Text = "Saque";
+			this.SaqueBtn.UseVisualStyleBackColor = true;
+			this.SaqueBtn.Click += new System.EventHandler(this.SaqueBtn_Click);
 			// 
 			// label1
 			// 
@@ -120,22 +164,76 @@ namespace Learning.Caelum
 			this.label1.TabIndex = 6;
 			this.label1.Text = "Número da conta:";
 			// 
+			// comboContas
+			// 
+			this.comboContas.FormattingEnabled = true;
+			this.comboContas.Location = new System.Drawing.Point(108, 12);
+			this.comboContas.Name = "comboContas";
+			this.comboContas.Size = new System.Drawing.Size(121, 21);
+			this.comboContas.TabIndex = 7;
+			this.comboContas.SelectedIndexChanged += new System.EventHandler(this.comboContas_SelectedIndexChanged);
+			// 
+			// destinoDaTrans
+			// 
+			this.destinoDaTrans.FormattingEnabled = true;
+			this.destinoDaTrans.Location = new System.Drawing.Point(108, 144);
+			this.destinoDaTrans.Name = "destinoDaTrans";
+			this.destinoDaTrans.Size = new System.Drawing.Size(121, 21);
+			this.destinoDaTrans.TabIndex = 8;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(16, 144);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(74, 13);
+			this.label2.TabIndex = 9;
+			this.label2.Text = "Conta Destino";
+			// 
+			// TransferenciaBtn
+			// 
+			this.TransferenciaBtn.Location = new System.Drawing.Point(12, 211);
+			this.TransferenciaBtn.Name = "TransferenciaBtn";
+			this.TransferenciaBtn.Size = new System.Drawing.Size(90, 23);
+			this.TransferenciaBtn.TabIndex = 10;
+			this.TransferenciaBtn.Text = "Transferência";
+			this.TransferenciaBtn.UseVisualStyleBackColor = true;
+			this.TransferenciaBtn.Click += new System.EventHandler(this.TransferenciaBtn_Click);
+			// 
 			// Form1
 			// 
 			this.ClientSize = new System.Drawing.Size(284, 261);
+			this.Controls.Add(this.TransferenciaBtn);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.destinoDaTrans);
+			this.Controls.Add(this.comboContas);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.button2);
+			this.Controls.Add(this.SaqueBtn);
 			this.Controls.Add(this.textoValor);
 			this.Controls.Add(this.textoNumero);
 			this.Controls.Add(this.textoSaldo);
 			this.Controls.Add(this.textoTitular);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.DepositoBtn);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
+		}
+
+		private void comboContas_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Conta conta = contas[comboContas.SelectedIndex];
+			AtualizarValoresExibidos(conta);
+		}
+
+		private void TransferenciaBtn_Click(object sender, EventArgs e)
+		{
+			Conta conta = BuscaContaSelecionada();
+			double valorTransferencia = Convert.ToDouble(textoValor.Text);
+			conta.Transfere(valorTransferencia, contas[destinoDaTrans.SelectedIndex]);
+			AtualizarValoresExibidos(conta);
 		}
 	}
 }
