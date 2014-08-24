@@ -1,11 +1,16 @@
-﻿namespace Learning.Caelum
+﻿using Caelum.CaixaEletronico.Contas;
+using System;
+
+namespace Caelum.CaixaEletronico.Contas
 {
-	internal sealed class ContaPoupanca : Conta
+	internal sealed class ContaPoupanca : Conta, ITributavel
 	{
 		public override bool Saca(double valor)
 		{
-			if (valor <= 0.0 || valor > this.Saldo)
-				return false;
+			if (valor <= 0.0)
+				throw new ArgumentException();
+			else if (valor > this.Saldo)
+				throw new SaldoInsuficienteException();
 
 			if (this.Titular.EhMaiorDeIdade)
 			{
@@ -19,6 +24,11 @@
 				this.Saldo -= valor;
 				return true;
 			}
+		}
+
+		public double CalculaTributos()
+		{
+			return Saldo * 0.03;
 		}
 	}
 }

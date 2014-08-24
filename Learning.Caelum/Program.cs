@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Learning.Caelum
+namespace Caelum.CaixaEletronico
 {
 	internal static class Program
 	{

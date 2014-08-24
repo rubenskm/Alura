@@ -1,4 +1,6 @@
-﻿namespace Learning.Caelum
+﻿using Caelum.CaixaEletronico.Usuarios;
+
+namespace Caelum.CaixaEletronico.Contas
 {
 	public abstract class Conta
 	{

@@ -3,7 +3,7 @@ using System;
 
 namespace Caelum.CaixaEletronico.Contas
 {
-	internal sealed class ContaCorrente : Conta
+	internal sealed class ContaInvestimento : Conta, ITributavel
 	{
 		public override bool Saca(double valor)
 		{
@@ -14,17 +14,21 @@ namespace Caelum.CaixaEletronico.Contas
 
 			if (this.Titular.EhMaiorDeIdade)
 			{
-				this.Saldo -= valor;
+				this.Saldo -= valor + 0.1;
 				return true;
 			}
 			else
 			{
 				if (valor >= 200.0)
 					return false;
-
 				this.Saldo -= valor;
 				return true;
 			}
+		}
+
+		public double CalculaTributos()
+		{
+			return Saldo * 0.02;
 		}
 	}
 }

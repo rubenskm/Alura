@@ -11,7 +11,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
 
-namespace Learning.Caelum.Properties
+namespace Caelum.CaixaEletronico.Properties
 {
   [DebuggerNonUserCode]
   [CompilerGenerated]

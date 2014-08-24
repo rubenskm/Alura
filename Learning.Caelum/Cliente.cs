@@ -1,4 +1,4 @@
-﻿namespace Learning.Caelum
+﻿namespace Caelum.CaixaEletronico.Usuarios
 {
 	public sealed class Cliente
 	{
@@ -34,6 +34,17 @@
 		public bool PodeAbrirConta()
 		{
 			return (EhMaiorDeIdade || EEmancipado) && !string.IsNullOrEmpty(CPF);
+		}
+
+		public override bool Equals(object obj)
+		{
+			Cliente cliente = (Cliente)obj;
+			return this.RG.Equals(cliente.RG);
+		}
+
+		public override string ToString()
+		{
+			return string.Format("Cliente Nome: {0}, RG: {1}", this.Nome, this.RG);
 		}
 	}
 }

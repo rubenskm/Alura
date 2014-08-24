@@ -2,13 +2,15 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using Caelum.CaixaEletronico.Contas;
+using Caelum.CaixaEletronico.Banco;
+using Caelum.CaixaEletronico.Usuarios;
 
-namespace Learning.Caelum
+namespace Caelum.CaixaEletronico
 {
 	public class Form1 : Form
 	{
 		private IContainer components = (IContainer)null;
-		private Conta conta;
 		private Button DepositoBtn;
 		private TextBox textoTitular;
 		private TextBox textoSaldo;
@@ -36,14 +38,18 @@ namespace Learning.Caelum
 
 			for (int i = 0; i < 2; i++)
 			{
-				comboContas.Items.Add(contas[i].Titular.Nome);
-				destinoDaTrans.Items.Add(contas[i].Titular.Nome);
+				comboContas.Items.Add(contas[i]);
+				destinoDaTrans.Items.Add(contas[i]);
 			}
 
 			comboContas.SelectedIndex = 0;
 			destinoDaTrans.SelectedIndex = 1;
 			textoValor.Text = "1";
 			AtualizarValoresExibidos(contas[0]);
+
+			ContaInvestimento c1 = new ContaInvestimento();
+			ContaPoupanca co = new ContaPoupanca();
+
 		}
 
 		private void AtualizarValoresExibidos(Conta conta)
@@ -79,10 +85,22 @@ namespace Learning.Caelum
 
 		private void SaqueBtn_Click(object sender, EventArgs e)
 		{
-			double valorSaque = Convert.ToDouble(textoValor.Text);
-			Conta contaSelecionada = this.BuscaContaSelecionada();
-			contaSelecionada.Saca(valorSaque);
-			AtualizarValoresExibidos(contaSelecionada);
+			try
+			{
+				double valorSaque = Convert.ToDouble(textoValor.Text);
+				Conta contaSelecionada = this.BuscaContaSelecionada();
+				contaSelecionada.Saca(valorSaque);
+				AtualizarValoresExibidos(contaSelecionada);
+			}
+			catch (ArgumentException exception)
+			{
+				MessageBox.Show(String.Format("Valor a ser sacado inválido!, {0}"), exception.Message);
+			}
+			catch (SaldoInsuficienteException exception)
+			{
+				MessageBox.Show(exception.Message);
+			}
+
 		}
 
 		protected override void Dispose(bool disposing)
@@ -166,19 +184,21 @@ namespace Learning.Caelum
 			// 
 			// comboContas
 			// 
+			this.comboContas.DisplayMember = "Nome";
 			this.comboContas.FormattingEnabled = true;
 			this.comboContas.Location = new System.Drawing.Point(108, 12);
 			this.comboContas.Name = "comboContas";
-			this.comboContas.Size = new System.Drawing.Size(121, 21);
+			this.comboContas.Size = new System.Drawing.Size(147, 21);
 			this.comboContas.TabIndex = 7;
 			this.comboContas.SelectedIndexChanged += new System.EventHandler(this.comboContas_SelectedIndexChanged);
 			// 
 			// destinoDaTrans
 			// 
+			this.destinoDaTrans.DisplayMember = "Nome";
 			this.destinoDaTrans.FormattingEnabled = true;
 			this.destinoDaTrans.Location = new System.Drawing.Point(108, 144);
 			this.destinoDaTrans.Name = "destinoDaTrans";
-			this.destinoDaTrans.Size = new System.Drawing.Size(121, 21);
+			this.destinoDaTrans.Size = new System.Drawing.Size(147, 21);
 			this.destinoDaTrans.TabIndex = 8;
 			// 
 			// label2

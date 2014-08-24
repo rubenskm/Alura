@@ -11,7 +11,7 @@
     <TargetFrameworkProfile />
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Learning.Caelum</RootNamespace>
+    <RootNamespace>Caelum.CaixaEletronico</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,6 +44,7 @@
     <Compile Include="Cliente.cs" />
     <Compile Include="Conta.cs" />
     <Compile Include="ContaCorrente.cs" />
+    <Compile Include="ContaInvestimento.cs" />
     <Compile Include="ContaPoupanca.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -52,7 +53,11 @@
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Properties\Settings.Designer.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="SaldoInsuficienteException.cs" />
+    <Compile Include="SeguroDeVida.cs" />
     <Compile Include="TotalizadorDeContas.cs" />
+    <Compile Include="GerenciadorDeImposto.cs" />
+    <Compile Include="ITributavel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">

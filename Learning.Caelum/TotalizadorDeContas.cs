@@ -1,4 +1,6 @@
-﻿namespace Learning.Caelum
+﻿using Caelum.CaixaEletronico.Contas;
+
+namespace Caelum.CaixaEletronico.Totalizador
 {
 	class TotalizadorDeContas
 	{

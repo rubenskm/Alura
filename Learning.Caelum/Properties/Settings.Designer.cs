@@ -8,7 +8,7 @@ using System.CodeDom.Compiler;
 using System.Configuration;
 using System.Runtime.CompilerServices;
 
-namespace Learning.Caelum.Properties
+namespace Caelum.CaixaEletronico.Properties
 {
   [CompilerGenerated]
   [GeneratedCode("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
