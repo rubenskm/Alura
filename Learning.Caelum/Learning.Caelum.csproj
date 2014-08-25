@@ -35,12 +35,20 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco.cs" />
+    <Compile Include="CadastroDeContas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CadastroDeContas.Designer.cs">
+      <DependentUpon>CadastroDeContas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cliente.cs" />
     <Compile Include="Conta.cs" />
     <Compile Include="ContaCorrente.cs" />
@@ -48,6 +56,9 @@
     <Compile Include="ContaPoupanca.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs" />
@@ -60,6 +71,9 @@
     <Compile Include="ITributavel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CadastroDeContas.resx">
+      <DependentUpon>CadastroDeContas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

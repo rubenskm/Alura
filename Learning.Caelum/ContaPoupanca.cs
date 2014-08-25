@@ -1,5 +1,4 @@
-﻿using Caelum.CaixaEletronico.Contas;
-using System;
+﻿using System;
 
 namespace Caelum.CaixaEletronico.Contas
 {
@@ -29,6 +28,14 @@ namespace Caelum.CaixaEletronico.Contas
 		public double CalculaTributos()
 		{
 			return Saldo * 0.03;
+		}
+
+		public string ClassName
+		{
+			get
+			{
+				return "ContaPoupanca";
+			}
 		}
 	}
 }

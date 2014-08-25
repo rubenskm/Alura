@@ -1,5 +1,4 @@
-﻿using Caelum.CaixaEletronico.Contas;
-using System;
+﻿using System;
 
 namespace Caelum.CaixaEletronico.Contas
 {
@@ -24,6 +23,14 @@ namespace Caelum.CaixaEletronico.Contas
 
 				this.Saldo -= valor;
 				return true;
+			}
+		}
+
+		public string ClassName 
+		{  
+			get 
+			{
+				return "ContaCorrente";
 			}
 		}
 	}

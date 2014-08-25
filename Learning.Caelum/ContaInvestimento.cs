@@ -1,5 +1,4 @@
-﻿using Caelum.CaixaEletronico.Contas;
-using System;
+﻿using System;
 
 namespace Caelum.CaixaEletronico.Contas
 {
