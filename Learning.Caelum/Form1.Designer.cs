@@ -38,6 +38,7 @@
 			this.textoValor = new System.Windows.Forms.TextBox();
 			this.textoNumero = new System.Windows.Forms.TextBox();
 			this.cadastrarBtn = new System.Windows.Forms.Button();
+			this.btnRemover = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// textoTitular
@@ -125,11 +126,22 @@
 			this.cadastrarBtn.UseVisualStyleBackColor = true;
 			this.cadastrarBtn.Click += new System.EventHandler(this.cadastrarBtn_Click);
 			// 
+			// btnRemover
+			// 
+			this.btnRemover.Location = new System.Drawing.Point(119, 243);
+			this.btnRemover.Name = "btnRemover";
+			this.btnRemover.Size = new System.Drawing.Size(95, 23);
+			this.btnRemover.TabIndex = 10;
+			this.btnRemover.Text = "RemoverConta";
+			this.btnRemover.UseVisualStyleBackColor = true;
+			this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(297, 275);
+			this.Controls.Add(this.btnRemover);
 			this.Controls.Add(this.cadastrarBtn);
 			this.Controls.Add(this.textoNumero);
 			this.Controls.Add(this.textoValor);
@@ -159,5 +171,6 @@
 		private System.Windows.Forms.TextBox textoValor;
 		private System.Windows.Forms.TextBox textoNumero;
 		private System.Windows.Forms.Button cadastrarBtn;
+		private System.Windows.Forms.Button btnRemover;
 	}
 }

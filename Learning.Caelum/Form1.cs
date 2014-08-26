@@ -1,14 +1,14 @@
 ﻿using Caelum.CaixaEletronico.Contas;
 using Caelum.CaixaEletronico.Usuarios;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Caelum.CaixaEletronico
 {
 	public partial class Form1 : Form
 	{
-		private Conta[] contas = new Conta[10];
-		private int quantidade = 0;
+		private IList<Conta> contas = new List<Conta>();
 
 		public Form1()
 		{
@@ -17,8 +17,8 @@ namespace Caelum.CaixaEletronico
 			this.comboContas.DisplayMember = "Numero";
 			this.destinoDaTrans.DisplayMember = "Numero";
 
-			contas = AdicionarConta(contas, 100, 1, "João");
-			contas = AdicionarConta(contas, 200, 2, "Mário");
+			AdicionarConta(100, 1, "João");
+			AdicionarConta(200, 2, "Mário");
 
 			comboContas.SelectedIndex = 0;
 			destinoDaTrans.SelectedIndex = 1;
@@ -33,15 +33,13 @@ namespace Caelum.CaixaEletronico
 			this.textoTitular.Text = conta.Titular.Nome;
 		}
 
-		private Conta[] AdicionarConta(Conta[] contas, double valorDepositar, int numero, string nomeTitular)
+		private void AdicionarConta(double valorDepositar, int numero, string nomeTitular)
 		{
 			Conta conta = new ContaCorrente();
 			conta.Deposita(valorDepositar);
 			conta.Numero = numero;
 			conta.Titular = new Cliente(nomeTitular);
 			AdicionaConta(conta);
-
-			return contas;
 		}
 
 		private Conta BuscaContaSelecionada()
@@ -59,7 +57,7 @@ namespace Caelum.CaixaEletronico
 
 		private void comboContas_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Conta conta = contas[comboContas.SelectedIndex];
+			Conta conta =(Conta) comboContas.SelectedItem;
 			AtualizarValoresExibidos(conta);
 		}
 
@@ -92,16 +90,30 @@ namespace Caelum.CaixaEletronico
 
 		public void AdicionaConta(Conta conta)
 		{
-			contas[quantidade++] = conta;
+			contas.Add(conta);
 
 			comboContas.Items.Add(conta);
 			destinoDaTrans.Items.Add(conta);
+		}
+
+		private void RemoverConta(Conta conta)
+		{
+			contas.Remove(conta);
+
+			comboContas.Items.Remove(conta);
+			destinoDaTrans.Items.Remove(conta);
+			comboContas.SelectedIndex = 0;
 		}
 
 		private void cadastrarBtn_Click(object sender, EventArgs e)
 		{
 			CadastroDeContas cadastroDeContas = new CadastroDeContas(this);
 			cadastroDeContas.ShowDialog();
+		}
+
+		private void btnRemover_Click(object sender, EventArgs e)
+		{
+			RemoverConta((Conta)comboContas.SelectedItem);
 		}
 	}
 }

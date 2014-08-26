@@ -7,7 +7,7 @@
     <ProjectGuid>{41E7DE56-930A-4354-9EE0-0FFE8320DABC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AssemblyName>Learning.Caelum</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <FileAlignment>512</FileAlignment>
