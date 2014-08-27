@@ -66,6 +66,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="SaldoInsuficienteException.cs" />
     <Compile Include="SeguroDeVida.cs" />
+    <Compile Include="StringUtils.cs" />
     <Compile Include="TotalizadorDeContas.cs" />
     <Compile Include="GerenciadorDeImposto.cs" />
     <Compile Include="ITributavel.cs" />

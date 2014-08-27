@@ -3,12 +3,14 @@ using Caelum.CaixaEletronico.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
+using Caelum.CaixaEletronico.Sistema;
 
 namespace Caelum.CaixaEletronico
 {
 	public partial class Form1 : Form
 	{
-		private IList<Conta> contas = new List<Conta>();
+		private List<Conta> contas = new List<Conta>();
 
 		public Form1()
 		{
@@ -19,6 +21,18 @@ namespace Caelum.CaixaEletronico
 
 			AdicionarConta(100, 1, "João");
 			AdicionarConta(200, 2, "Mário");
+
+			//Teste com linq
+			var filtro = from c in contas
+						 where c.Saldo > 100
+						 select c;
+
+			var ordenadas = contas.OrderBy(p => p.Titular.Nome.Length).ThenBy(p => p.Numero).ToList();
+
+			var sum = filtro.Sum(c => c.Saldo);
+
+			//Teste com extension method
+			var teste = "conta".Pluralize();
 
 			comboContas.SelectedIndex = 0;
 			destinoDaTrans.SelectedIndex = 1;
@@ -114,6 +128,13 @@ namespace Caelum.CaixaEletronico
 		private void btnRemover_Click(object sender, EventArgs e)
 		{
 			RemoverConta((Conta)comboContas.SelectedItem);
+		}
+
+		private Conta ContaComSaldo(double saldo)
+		{
+			Conta conta = new ContaCorrente();
+			conta.Deposita(saldo);
+			return conta;
 		}
 	}
 }
