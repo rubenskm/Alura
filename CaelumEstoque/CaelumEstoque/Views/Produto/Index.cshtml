@@ -31,7 +31,7 @@
 		$.post(url, params, atualiza);
 	}
 
-	function atualiza(resultado)
+	function atualiza(resposta)
 	{
 		var elemento = $("#quantidade" + resposta.Id);
 		elemento.html(resposta.Quantidade);

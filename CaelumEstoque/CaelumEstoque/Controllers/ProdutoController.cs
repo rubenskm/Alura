@@ -1,10 +1,12 @@
 ﻿using CaelumEstoque.DAO;
+using CaelumEstoque.Filtros;
 using CaelumEstoque.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace CaelumEstoque.Controllers
 {
+	[AutenticacaoFilter]
 	public class ProdutoController : Controller
 	{
 		// GET: Produtos
@@ -30,7 +32,7 @@ namespace CaelumEstoque.Controllers
 			return View("Form");
 		}
 
-		[HttpPost]
+		[HttpPost, ValidateAntiForgeryTokenAttribute]
 		public ActionResult Adiciona(Produto produto)
 		{
 			if (!produto.PrecoMaiorOuIgual100())
