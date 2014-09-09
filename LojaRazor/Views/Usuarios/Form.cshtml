@@ -1,40 +1,71 @@
-﻿<form action="@Url.Action("Cadastra")" method="post">
-    <fieldset>
-        <legend>Dados Pessoais</legend>
+﻿@model LojaRazor.Models.Usuario
+@using (Html.BeginForm("Cadastra", "Usuarios", FormMethod.Post))
+{
+	<fieldset>
+		<legend>Dados Pessoais</legend>
 
-        <label for="nome">Nome: </label>
-        <input id="nome" type="text" name="usuario.Nome" />
+		@Html.LabelFor(u => u.Nome, "Nome:")
+		@Html.LabelFor(u => u.Nome, "Nome:")
+		@Html.TextBoxFor(u => u.Nome)
+		@Html.ValidationMessageFor(u => u.Nome)
 
-        <label for="email">E-mail: </label>
-        <input id="email" type="text" name="usuario.Email" />
+		@Html.LabelFor(u => u.Email, "E-mail:")
+		@Html.TextBoxFor(u => u.Email)
+		@Html.ValidationMessageFor(u => u.Email)
 
-        <label for="senha">Senha:</label>
-        <input id="senha" type="password" name="usuario.Senha" />
+		<div class="control-group">
+			<!-- declaração das labels -->
+			<label class="inline radio">
+				<!-- declaração do radio button para o sexo masculino -->
+				@Html.RadioButtonFor(u => u.Sexo, LojaRazor.Models.Sexo.Masculino)
+				Masculino
+			</label>
+			<label class="inline radio">
+				<!-- declaração do radio button para o sexo feminino -->
+				@Html.RadioButtonFor(u => u.Sexo, LojaRazor.Models.Sexo.Feminino)
+				Feminino
+			</label>
+		</div>
 
-        <label for="dataDeNascimento">Data de Nascimento: </label>
-        <input id="dataDeNascimento" type="text" name="usuario.DataDeNascimento" />
-    </fieldset>
+		@Html.LabelFor(u => u.Estado, "Estado:")
+		@Html.DropDownListFor(u => u.Estado, new SelectList(Enum.GetValues(typeof(LojaRazor.Models.Estado))))
 
-    <fieldset>
-        <legend>Dados de Entrega</legend>
+		@Html.LabelFor(u => u.Senha, "Senha:")
+		@Html.PasswordFor(u => u.Senha)
+		@Html.ValidationMessageFor(u => u.Senha)
 
-        <label for="endereco">Endereço: </label>
-        <input id="endereco" type="text" name="usuario.Endereco" />
+		@Html.LabelFor(u => u.DataDeNascimento, "Data de Nascimento:")
+		@Html.TextBoxFor(u => u.DataDeNascimento)
+		@Html.ValidationMessageFor(u => u.DataDeNascimento)
+</fieldset>
 
-        <label for="complemento">Complemento: </label>
-        <input id="complemento" type="text" name="usuario.Complemento" />
+	<fieldset>
+		<legend>Dados de Entrega</legend>
 
-        <label for="cep">CEP: </label>
-        <input id="cep" type="text" name="usuario.CEP" />
+		@Html.LabelFor(u => u.Endereco, "Endereço:")
+		@Html.TextBoxFor(u => u.Endereco)
+		@Html.ValidationMessageFor(u => u.Endereco)
 
-        <label for="observacoes">Observações: </label>
-        <textarea id="observacoes" name="usuario.Observacoes"></textarea>
-    </fieldset>
-    <div>
-        <input name="usuario.RecebePromocoes" type="checkbox" value="true" />
-        Desejo receber informações sobre promoções
-    </div>
+		@Html.LabelFor(u => u.Complemento, "Complemento:")
+		@Html.TextBoxFor(u => u.Complemento)
+		@Html.ValidationMessageFor(u => u.Complemento)
 
-    <input type="submit" value="Cadastrar" class="btn btn-large" />
+		@Html.LabelFor(u => u.CEP, "CEP:")
+		@Html.TextBoxFor(u => u.CEP)
+		@Html.ValidationMessageFor(u => u.CEP)
 
-</form>
+		@Html.LabelFor(u => u.Observacoes, "Observação:")
+		@Html.TextAreaFor(u => u.Observacoes)
+		@Html.ValidationMessageFor(u => u.Observacoes)
+	</fieldset>
+	<div>
+		@Html.CheckBoxFor(u => u.RecebePromocoes)
+		Desejo receber informações sobre promoções
+	</div>
+
+	<input type="submit" value="Cadastrar" class="btn btn-large" />
+}	
+
+@section Scripts {
+	@Scripts.Render("~/bundles/scripts")
+}
