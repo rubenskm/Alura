@@ -10,6 +10,12 @@ namespace LojaWeb.Controllers
 {
 	public class CategoriasController : Controller
 	{
+		private CategoriasDAO dao;
+
+		public CategoriasController(CategoriasDAO dao)
+		{
+			this.dao = dao;
+		}
 		//
 		// GET: /Categorias/
 
@@ -26,11 +32,7 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Adiciona(Categoria categoria)
 		{
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				CategoriasDAO dao = new CategoriasDAO(session);
-				dao.Adiciona(categoria);
-			}
+			dao.Adiciona(categoria);
 			return RedirectToAction("Visualiza", new { id = categoria.Id });
 		}
 
@@ -42,23 +44,13 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Visualiza(int id)
 		{
-			Categoria categoria = new Categoria();
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				CategoriasDAO dao = new CategoriasDAO(session);
-				categoria = dao.BuscaPorId(id);
-			}
-
-			return View(categoria);
+			Categoria categoria = dao.BuscaPorId(id);
+			return View(categoria != null ? categoria : new Categoria());
 		}
 
 		public ActionResult Atualiza(Categoria categoria)
 		{
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				CategoriasDAO dao = new CategoriasDAO(session);
-				dao.Atualiza(categoria);
-			}
+			dao.Atualiza(categoria);
 			return RedirectToAction("Visualiza", new { id = categoria.Id });
 		}
 

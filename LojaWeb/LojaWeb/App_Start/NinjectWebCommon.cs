@@ -1,17 +1,19 @@
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(LojaWeb.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(LojaWeb.App_Start.NinjectWebCommon), "Stop")]
 
+
 namespace LojaWeb.App_Start
 {
 	using System;
 	using System.Web;
-
 	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
 	using Ninject;
 	using Ninject.Web.Common;
 	using NHibernate;
 	using LojaWeb.Infra;
+	using LojaWeb.Filters;
+	using System.Web.Mvc;
+	using Ninject.Web.Mvc.FilterBindingSyntax;
 
 	public static class NinjectWebCommon
 	{
@@ -64,6 +66,10 @@ namespace LojaWeb.App_Start
 		private static void RegisterServices(IKernel kernel)
 		{
 			kernel.Bind<ISession>().ToMethod(x => NHibernateHelper.AbreSession()).InRequestScope();
+
+			// registro dos outros componentes
+			int ordemExecucao = 1;
+			kernel.BindFilter<TransactionFilter>(FilterScope.Global, ordemExecucao);
 		}
 	}
 }

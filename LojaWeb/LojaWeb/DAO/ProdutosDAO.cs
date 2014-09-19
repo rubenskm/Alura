@@ -15,11 +15,7 @@ namespace LojaWeb.DAO
 
 		public void Adiciona(Produto produto)
 		{
-			using (ITransaction transacao = this.session.BeginTransaction())
-			{
-				this.session.Save(produto);
-				transacao.Commit();
-			}
+			this.session.Save(produto);
 		}
 
 		public void Remove(Produto produto)
@@ -29,11 +25,7 @@ namespace LojaWeb.DAO
 
 		public void Atualiza(Produto produto)
 		{
-			using (ITransaction transacao = this.session.BeginTransaction())
-			{
-				this.session.Merge(produto);
-				transacao.Commit();
-			}
+			this.session.Merge(produto);
 		}
 
 		public Produto BuscaPorId(int id)

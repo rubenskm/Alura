@@ -9,6 +9,12 @@ namespace LojaWeb.Controllers
 {
 	public class UsuariosController : Controller
 	{
+		private UsuariosDAO dao;
+
+		public UsuariosController(UsuariosDAO dao)
+		{
+			this.dao = dao;
+		}
 		//
 		// GET: /Usuarios/
 
@@ -25,11 +31,7 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Adiciona(Usuario usuario)
 		{
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				UsuariosDAO dao = new UsuariosDAO(session);
-				dao.Adiciona(usuario);
-			}
+			dao.Adiciona(usuario);	
 			return RedirectToAction("Visualiza", new { id = usuario.Id });
 		}
 
@@ -40,23 +42,13 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Visualiza(int id)
 		{
-			Usuario usuario = new Usuario();
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				UsuariosDAO dao = new UsuariosDAO(session);
-				usuario = dao.BuscaPorId(id);
-			}
-
-			return View(usuario);
+			Usuario usuario = dao.BuscaPorId(id);
+			return View(usuario != null ? usuario : new Usuario());
 		}
 
 		public ActionResult Atualiza(Usuario usuario)
 		{
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				UsuariosDAO dao = new UsuariosDAO(session);
-				dao.Atualiza(usuario);
-			}
+			dao.Atualiza(usuario);
 			return RedirectToAction("Visualiza", new { id = usuario.Id });
 		}
 

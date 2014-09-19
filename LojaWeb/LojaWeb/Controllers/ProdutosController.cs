@@ -32,11 +32,7 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Adiciona(Produto produto)
 		{
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				ProdutosDAO dao = new ProdutosDAO(session);
-				dao.Adiciona(produto);
-			}
+			dao.Adiciona(produto);
 			return RedirectToAction("Visualiza", new { id = produto.Id });
 		}
 
@@ -47,23 +43,13 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Visualiza(int id)
 		{
-			Produto produto = new Produto();
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				ProdutosDAO dao = new ProdutosDAO(session);
-				produto = dao.BuscaPorId(id);
-			}
-
-			return View(produto);
+			Produto produto = dao.BuscaPorId(id);
+			return View(produto != null ? produto : new Produto());
 		}
 
 		public ActionResult Atualiza(Produto produto)
 		{
-			using (ISession session = NHibernateHelper.AbreSession())
-			{
-				ProdutosDAO dao = new ProdutosDAO(session);
-				dao.Atualiza(produto);
-			}
+			dao.Atualiza(produto);
 			return RedirectToAction("Visualiza", new { id = produto.Id });
 		}
 
