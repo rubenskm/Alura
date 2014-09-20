@@ -35,27 +35,40 @@ namespace LojaWeb.DAO
 
 		public IList<Produto> Lista()
 		{
-			return new List<Produto>();
+			IQuery query = session.CreateQuery("from Produto");
+			return query.List<Produto>();
 		}
 
 		public IList<Produto> ProdutosComPrecoMaiorDoQue(double? preco)
 		{
-			return new List<Produto>();
+			IQuery query = session.CreateQuery("from Produto p where p.Preco > :preco");
+			query.SetParameter("preco", preco.GetValueOrDefault(0));
+			return query.List<Produto>();
 		}
 
 		public IList<Produto> ProdutosDaCategoria(string nomeCategoria)
 		{
-			return new List<Produto>();
+			IQuery query = session.CreateQuery("from Produto p where p.Categoria.Nome = :nomeCategoria");
+			query.SetParameter("nomeCategoria", nomeCategoria);
+			return query.List<Produto>();
 		}
 
 		public IList<Produto> ProdutosDaCategoriaComPrecoMaiorDoQue(double? preco, string nomeCategoria)
 		{
-			return new List<Produto>();
+			IQuery query = session.CreateQuery("from Produto p where p.Categoria.Nome = :nomeCategoria and p.Preco > :preco");
+			query.SetParameter("nomeCategoria", nomeCategoria);
+			query.SetParameter("preco", preco.GetValueOrDefault(0));
+			return query.List<Produto>();
 		}
 
 		public IList<Produto> ListaPaginada(int paginaAtual)
 		{
-			return new List<Produto>();
+			string hql = "from Produto p order by p.Id";
+			int resultadosPorPagina = 10;
+			IQuery query = session.CreateQuery(hql);
+			query.SetMaxResults(resultadosPorPagina);
+			query.SetFirstResult(resultadosPorPagina * (paginaAtual - 1));
+			return query.List<Produto>();
 		}
 
 		public IList<Produto> BuscaPorPrecoCategoriaENome(double? preco, string nomeCategoria, string nome)

@@ -1,6 +1,8 @@
 ﻿using LojaWeb.Entidades;
 using LojaWeb.Models;
 using NHibernate;
+using NHibernate.Transform;
+using System;
 using System.Collections.Generic;
 
 namespace LojaWeb.DAO
@@ -16,11 +18,7 @@ namespace LojaWeb.DAO
 
 		public void Adiciona(Categoria categoria)
 		{
-			using (ITransaction transacao = this.session.BeginTransaction())
-			{
-				this.session.Save(categoria);
-				transacao.Commit();
-			}
+			this.session.Save(categoria);
 		}
 
 		public void Remove(Categoria categoria)
@@ -30,11 +28,7 @@ namespace LojaWeb.DAO
 
 		public void Atualiza(Categoria categoria)
 		{
-			using (ITransaction transacao = this.session.BeginTransaction())
-			{
-				this.session.Merge(categoria);
-				transacao.Commit();
-			}
+			this.session.Merge(categoria);
 		}
 
 		public Categoria BuscaPorId(int id)
@@ -44,18 +38,25 @@ namespace LojaWeb.DAO
 
 		public IList<Categoria> Lista()
 		{
-			return new List<Categoria>();
+			string hql = "select c from Categoria c";
+			IQuery query = session.CreateQuery(hql);
+			return query.List<Categoria>();
 		}
 
 		public IList<Categoria> BuscaPorNome(string nome)
 		{
-			return new List<Categoria>();
+			string hql = "from Categoria c where c.Nome = :nome";
+			IQuery query = session.CreateQuery(hql);
+			query.SetParameter("nome", nome);
+			return query.List<Categoria>();
 		}
 
 		public IList<ProdutosPorCategoria> ListaNumeroDeProdutosPorCategoria()
 		{
-			return new List<ProdutosPorCategoria>();
+			string hql = "select p.Categoria as Categoria, count(p) as NumeroDeProdutos from Produto p group by p.Categoria";
+			IQuery query = session.CreateQuery(hql);
+			query.SetResultTransformer(Transformers.AliasToBean<ProdutosPorCategoria>());
+			return query.List<ProdutosPorCategoria>();
 		}
 	}
-
 }

@@ -10,21 +10,32 @@ namespace LojaWeb.Filters
 		{
 			this.session = session;
 		}
+
 		public override void OnActionExecuting(ActionExecutingContext contexto)
 		{
 			session.BeginTransaction();
 		}
-		public override void OnActionExecuted(ActionExecutedContext contexto)
+
+		public override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			if (contexto.Exception == null)
+			if (filterContext.Exception != null)
 			{
-				session.Transaction.Commit();
+				session.Transaction.Rollback();
+				session.Close();
+			}
+		}
+
+		public override void OnResultExecuted(ResultExecutedContext filterContext)
+		{
+			if (filterContext.Exception == null)
+			{
+				this.session.Transaction.Commit();
 			}
 			else
 			{
-				session.Transaction.Rollback();
+				this.session.Transaction.Rollback();
 			}
-			session.Close();
+			this.session.Close();
 		}
 	}
 }

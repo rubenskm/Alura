@@ -56,7 +56,7 @@ namespace LojaWeb.Controllers
 
 		public ActionResult CategoriasEProdutos()
 		{
-			IList<Categoria> categorias = new List<Categoria>();
+			IList<Categoria> categorias = dao.Lista();
 			return View(categorias);
 		}
 
@@ -64,13 +64,13 @@ namespace LojaWeb.Controllers
 		{
 			ViewBag.Nome = nome;
 
-			IList<Categoria> categorias = new List<Categoria>();
+			IList<Categoria> categorias = dao.BuscaPorNome(nome);
 			return View(categorias);
 		}
 
 		public ActionResult NumeroDeProdutosPorCategoria()
 		{
-			IList<ProdutosPorCategoria> produtosPorCategoria = new List<ProdutosPorCategoria>();
+			IList<ProdutosPorCategoria> produtosPorCategoria = dao.ListaNumeroDeProdutosPorCategoria();
 			return View(produtosPorCategoria);
 		}
 	}

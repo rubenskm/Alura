@@ -20,8 +20,7 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Index()
 		{
-
-			IList<Produto> produtos = new List<Produto>();
+			IList<Produto> produtos = dao.Lista();
 			return View(produtos);
 		}
 
@@ -32,8 +31,19 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Adiciona(Produto produto)
 		{
+			produto = CheckCategory(produto);
+
 			dao.Adiciona(produto);
 			return RedirectToAction("Visualiza", new { id = produto.Id });
+		}
+
+		private Produto CheckCategory(Produto produto)
+		{
+			if (produto.Categoria.Id == 0)
+			{
+				produto.Categoria = null;
+			}
+			return produto;
 		}
 
 		public ActionResult Remove(int id)
@@ -49,6 +59,7 @@ namespace LojaWeb.Controllers
 
 		public ActionResult Atualiza(Produto produto)
 		{
+			produto = CheckCategory(produto);
 			dao.Atualiza(produto);
 			return RedirectToAction("Visualiza", new { id = produto.Id });
 		}
@@ -56,14 +67,14 @@ namespace LojaWeb.Controllers
 		public ActionResult ProdutosComPrecoMinimo(double? preco)
 		{
 			ViewBag.Preco = preco;
-			IList<Produto> produtos = new List<Produto>();
+			IList<Produto> produtos = dao.ProdutosComPrecoMaiorDoQue(preco);
 			return View(produtos);
 		}
 
 		public ActionResult ProdutosDaCategoria(string nomeCategoria)
 		{
 			ViewBag.NomeCategoria = nomeCategoria;
-			IList<Produto> produtos = new List<Produto>();
+			IList<Produto> produtos = dao.ProdutosDaCategoria(nomeCategoria);
 			return View(produtos);
 		}
 
@@ -71,7 +82,7 @@ namespace LojaWeb.Controllers
 		{
 			ViewBag.Preco = preco;
 			ViewBag.NomeCategoria = nomeCategoria;
-			IList<Produto> produtos = new List<Produto>();
+			IList<Produto> produtos = dao.ProdutosDaCategoriaComPrecoMaiorDoQue(preco, nomeCategoria);
 			return View(produtos);
 		}
 
@@ -88,7 +99,7 @@ namespace LojaWeb.Controllers
 		{
 			int paginaAtual = pagina.GetValueOrDefault(1);
 			ViewBag.Pagina = paginaAtual;
-			IList<Produto> produtos = new List<Produto>();
+			IList<Produto> produtos = dao.ListaPaginada(paginaAtual);
 			return View(produtos);
 		}
 	}
