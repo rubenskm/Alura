@@ -1,5 +1,6 @@
 ﻿using LojaWeb.Entidades;
 using NHibernate;
+using NHibernate.Criterion;
 using System.Collections.Generic;
 
 namespace LojaWeb.DAO
@@ -73,7 +74,25 @@ namespace LojaWeb.DAO
 
 		public IList<Produto> BuscaPorPrecoCategoriaENome(double? preco, string nomeCategoria, string nome)
 		{
-			return new List<Produto>();
+			ICriteria criteria = session.CreateCriteria<Produto>();
+
+			if (preco > 0)
+			{
+				criteria.Add(Restrictions.Gt("Preco", preco));
+			}
+			
+			if (!string.IsNullOrEmpty(nome))
+			{
+				criteria.Add(Restrictions.Eq("Nome", nome));
+			}
+
+			if (!string.IsNullOrEmpty(nomeCategoria))
+			{
+				ICriteria criteriaCategoria = criteria.CreateCriteria("Categoria");
+				criteriaCategoria.Add(Restrictions.Eq("Nome", nomeCategoria));
+			}
+
+			return criteria.List<Produto>();
 		}
 	}
 }

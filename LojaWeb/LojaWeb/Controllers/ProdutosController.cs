@@ -92,7 +92,7 @@ namespace LojaWeb.Controllers
 			ViewBag.Nome = nome;
 			ViewBag.NomeCategoria = nomeCategoria;
 
-			IList<Produto> produtos = new List<Produto>();
+			IList<Produto> produtos = dao.BuscaPorPrecoCategoriaENome(preco, nomeCategoria, nome);
 			return View(produtos);
 		}
 		public ActionResult ListaPaginada(int? pagina)
