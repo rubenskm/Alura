@@ -1,6 +1,4 @@
-﻿
-using Loja.Entidades;
-using Loja.Infra;
+﻿using Loja.Infra;
 using NHibernate;
 using System;
 namespace Loja
@@ -9,18 +7,7 @@ namespace Loja
 	{
 		static void Main(string[] args)
 		{
-			//NHibernateHelper.GeraSchema();
-
-			Produto produto = new Produto();
-			produto.Nome = "Teclado";
-			produto.Preco = 20.0;
-
-			using(ISession session = NHibernateHelper.AbreSession())
-			{
-				session.BeginTransaction();
-				session.Save(produto);
-				session.Transaction.Commit();
-			}
+			NHibernateHelper.GeraSchema();
 
 			Console.Read();
 		}

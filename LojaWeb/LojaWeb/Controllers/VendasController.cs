@@ -1,5 +1,6 @@
 ﻿using LojaWeb.DAO;
 using LojaWeb.Entidades;
+using LojaWeb.Infra;
 using LojaWeb.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
