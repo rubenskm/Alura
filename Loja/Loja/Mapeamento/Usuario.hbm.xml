@@ -5,16 +5,18 @@
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
-		<discriminator column="Tipo" type="System.String" />
-		
+
 		<property name="Nome"/>
 
-		<subclass name="PessoaFisica">
+		<joined-subclass name="PessoaFisica">
+			<key column="UsuarioId" />
 			<property name="CPF"/>
-		</subclass>
+		</joined-subclass>
 
-		<subclass name="PessoaJuridica">
+		<joined-subclass name="PessoaJuridica">
+			<key column="UsuarioId" />
 			<property name="CNPJ"/>
-		</subclass>
+		</joined-subclass>
+
 	</class>
 </hibernate-mapping>
