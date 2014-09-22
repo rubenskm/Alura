@@ -53,10 +53,10 @@ namespace LojaWeb.DAO
 
 		public IList<ProdutosPorCategoria> ListaNumeroDeProdutosPorCategoria()
 		{
-			string hql = "select c as Categoria, count(p) as NumeroDeProdutos from Produto p join p.Categoria c group by c.Id, c.Nome";
+			string hql = "select p.Categoria as Categoria, count(p) as NumeroDeProdutos from Produto p group by p.Categoria";
 			IQuery query = session.CreateQuery(hql);
 			query.SetResultTransformer(Transformers.AliasToBean<ProdutosPorCategoria>());
-			return  query.List<ProdutosPorCategoria>();
+			return query.List<ProdutosPorCategoria>();
 		}
 	}
 }
